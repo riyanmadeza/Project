@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AuthPesertaController;
 use App\Http\Controllers\CabangController;
+use App\Http\Controllers\LicenseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +27,13 @@ Route::post('register/peserta', [AuthPesertaController::class, 'register']);
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('logout/admin', [AuthController::class, 'logout']);
     Route::post('logout/peserta', [AuthPesertaController::class, 'logout']);
-
+    //cabang
     Route::get('cabang', [CabangController::class, 'index']);
     Route::post('cabang/search', [CabangController::class, 'search']);
     Route::post('cabang', [CabangController::class, 'store']);
     Route::delete('cabang', [CabangController::class, 'delete']);
+    //license
+    Route::post('license/search', [LicenseController::class, 'search']);
 
 });
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
