@@ -16,7 +16,7 @@ class CabangController extends Controller
 
     public function search(Request $request)
     {
-        $cabang = Cabang::where('CABANG_CODE', $request->CABANG_CODE)->first();
+        $cabang = Cabang::where('CABANG_CODE', $request->CABANG_CODE)->get();
 
         return response()->json(['cabang' => $cabang], 200);
     }

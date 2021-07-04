@@ -4,8 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AuthPesertaController;
+use App\Http\Controllers\AppConfigurationController;
 use App\Http\Controllers\CabangController;
+use App\Http\Controllers\JenisPerlombaanController;
+use App\Http\Controllers\KategoriPerlombaanController;
 use App\Http\Controllers\LicenseController;
+use App\Http\Controllers\ParameterPerlombaanController;
+use App\Http\Controllers\UrlController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +38,23 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('cabang', [CabangController::class, 'store']);
     Route::delete('cabang', [CabangController::class, 'delete']);
     //license
+    Route::get('license', [LicenseController::class, 'index']);
     Route::post('license/search', [LicenseController::class, 'search']);
-
+    //Url
+    Route::get('url', [UrlController::class, 'index']);
+    Route::post('url/search', [UrlController::class, 'search']);
+    //App Configuration
+    Route::get('config', [AppConfigurationController::class, 'index']);
+    Route::post('config/search', [AppConfigurationController::class, 'search']);
+    //Jenis Perlombaan
+    Route::get('jenis', [JenisPerlombaanController::class, 'index']);
+    Route::post('jenis/search', [JenisPerlombaanController::class, 'search']);
+    //Kategori Perlombaan
+    Route::get('kategori', [KategoriPerlombaanController::class, 'index']);
+    Route::post('kategori/search', [KategoriPerlombaanController::class, 'search']);
+    //Parameter Perlombaan
+    Route::get('parameter', [ParameterPerlombaanController::class, 'index']);
+    Route::post('parameter/search', [ParameterPerlombaanController::class, 'search']);
 });
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
