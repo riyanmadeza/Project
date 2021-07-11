@@ -14,7 +14,7 @@ class CreatePesertasTable extends Migration
     public function up()
     {
         Schema::create('tb_peserta', function (Blueprint $table) {
-            $table->string('ID_PESERTA', 10)->primary();
+            $table->string('ID_PESERTA', 20)->primary();
             $table->string('NAMA_PESERTA', 50);
             $table->string('JENIS_KELAMIN', 1)->nullable(true)->default(null);
             $table->string('TEMPAT_LAHIR', 50)->nullable(true)->default(null);

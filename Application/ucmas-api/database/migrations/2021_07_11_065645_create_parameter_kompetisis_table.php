@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateParameterPerlombaansTable extends Migration
+class CreateParameterKompetisisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateParameterPerlombaansTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_parameter_perlombaan', function (Blueprint $table) {
-            $table->string('ROW_ID_HDR', 20);
+        Schema::create('tb_parameter_kompetisi', function (Blueprint $table) {
+            $table->string('ROW_ID_KOMPETISI', 20);
             $table->string('PARAMETER_ID', 20);
             $table->bigInteger('SOAL_DARI', false, false)->nullable(true)->default(null);
             $table->bigInteger('SOAL_SAMPAI', false, false)->nullable(true)->default(null);
@@ -36,7 +36,7 @@ class CreateParameterPerlombaansTable extends Migration
             $table->dateTime('ENTRY_DATE')->nullable(true)->default(null);
             $table->string('UPDATE_USER', 50)->nullable(true)->default(null);
             $table->dateTime('UPDATE_DATE')->nullable(true)->default(null);
-            $table->primary(['ROW_ID_HDR', 'PARAMETER_ID'], 'parameter_perlombaan_primary');
+            $table->primary(['ROW_ID_KOMPETISI', 'PARAMETER_ID'], 'parameter_kompetisi_primary');
         });
     }
 
@@ -47,6 +47,6 @@ class CreateParameterPerlombaansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_parameter_perlombaan');
+        Schema::dropIfExists('tb_parameter_kompetisi');
     }
 }

@@ -16,6 +16,7 @@ class CreateCabangsTable extends Migration
         Schema::create('tb_cabang', function (Blueprint $table) {
             $table->string('CABANG_CODE', 10)->primary();
             $table->string('CABANG_NAME', 50);
+            $table->string('LOKASI', 100)->nullable(true)->default(null);
             $table->string('IS_PUSAT', 1)->nullable(true)->default(null);
             $table->string('ALAMAT', 500);
             $table->string('NO_TELP', 50);

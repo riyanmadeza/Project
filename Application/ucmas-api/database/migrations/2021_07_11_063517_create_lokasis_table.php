@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKategoriPerlombaansTable extends Migration
+class CreateLokasisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,13 @@ class CreateKategoriPerlombaansTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_kategori_perlombaan', function (Blueprint $table) {
-            $table->string('ROW_ID', 20);
-            $table->string('JENIS_CODE', 10);
-            $table->string('KATEGORI_CODE', 10);
-            $table->string('KATEGORI_NAME', 500);
-            $table->bigInteger('LAMA_PERLOMBAAN', false, false)->nullable(true)->default(null);
-            $table->decimal('KECEPATAN',20, 2, false)->nullable(true)->default(null);
+        Schema::create('tb_lokasi', function (Blueprint $table) {
+            $table->string('LOKASI_NAME', 100);
             $table->string('ENTRY_USER', 50)->nullable(true)->default(null);
             $table->dateTime('ENTRY_DATE')->nullable(true)->default(null);
             $table->string('UPDATE_USER', 50)->nullable(true)->default(null);
             $table->dateTime('UPDATE_DATE')->nullable(true)->default(null);
-            $table->primary('ROW_ID');
+            $table->primary('LOKASI_NAME');
         });
     }
 
@@ -35,6 +30,6 @@ class CreateKategoriPerlombaansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_kategori_perlombaan');
+        Schema::dropIfExists('tb_lokasi');
     }
 }
