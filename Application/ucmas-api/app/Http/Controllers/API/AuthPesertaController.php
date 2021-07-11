@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\License;
 use App\Models\Peserta;
+use App\Models\Kompetisi;
 use Illuminate\Http\Request;
+use App\Models\PesertaKompetisi;
+use App\Models\ParameterKompetisi;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
@@ -65,25 +69,86 @@ class AuthPesertaController extends Controller
     public function login(Request $request)
     {
         $data = $request->validate([
-            'ID_PESERTA' => 'required|string|max:10',
+            'ID_PESERTA' => 'required|string|max:20',
             'PASSWORD_PESERTA' => 'required|string',
+            'CABANG_CODE' => 'required|string'
         ]);
+
+        $today = now();
+        $license = License::where('CABANG_CODE', $data['CABANG_CODE'])
+                ->whereDate('DATEFROM','<=', $today)
+                ->whereDate('DATETO','>=', $today)
+                ->get();
+
+        if($license->isEmpty())
+        {
+            return response(['message' => 'License not valid'], 400);
+        }
+
+        $pesertaKompetisi = PesertaKompetisi::where('ID_PESERTA', $data['ID_PESERTA'])->get();
+
+        if($pesertaKompetisi->isEmpty())
+        {
+            return response(['message' => 'Peserta tidak terdaftar kompetisi'], 400);
+        }
+
+        $row_id_peserta = [];
+        foreach ($pesertaKompetisi as $rowid){
+            $row_id_peserta[] = $rowid->ROW_ID_KOMPETISI;
+        }
+
+        $kompetisi = Kompetisi::where('CABANG_CODE', $data['CABANG_CODE'])
+                ->whereIn('ROW_ID', $row_id_peserta)
+                ->where('TANGGAL_KOMPETISI', date('Y-m-d'))
+                ->where('JAM_MULAI','<=', date('His'))
+                ->where('JAM_SAMPAI','>=', date('His'))
+                ->get();
+
+        if($kompetisi->isEmpty())
+        {
+            return response(['message' => 'Tidak ada jadwal kompetisi peserta'], 400);
+        }
+
+        $parameterkomp = ParameterKompetisi::whereIn('ROW_ID_KOMPETISI', $row_id_peserta)->get();
+        //date('Y-m-d') date('His')
+        /* return response()->json(['message' => 'OK',
+                                 'data' => $kompetisi], 200); */
 
         $peserta = Peserta::where('ID_PESERTA', $data['ID_PESERTA'])->first();
 
         if(!$peserta || !Hash::check($data['PASSWORD_PESERTA'], $peserta->PASSWORD_PESERTA))
         {
-            return response(['message' => 'Invalid Credentials'], 401);
+            return response(['message' => 'Invalid Credentials'], 400);
         }
         else
         {
             $token = $peserta->createToken('UcmasTokenLogin')->plainTextToken;
+            //$peserta->ID_PESERTA = $data['ID_PESERTA'];
+            $peserta->PASSWORD_PESERTA = $data['PASSWORD_PESERTA'];
+
             $response = [
-                'user' => $peserta,
+                'peserta' => $peserta,
+                'kompetisi' => $kompetisi,
+                'parameterkompetisi' => $parameterkomp,
                 'token' => $token
             ];
 
-            return response()->json($response, 201);
+            return response()->json($response, 200);
         }
+    }
+
+    public function changepassword(Request $request)
+    {
+        $data = $request->validate([
+            'ID_PESERTA' => 'required|string|max:20',
+            'PASSWORD_PESERTA' => 'required|string',
+        ]);
+
+        $peserta = Peserta::where('ID_PESERTA', $data['ID_PESERTA'])->first();
+        $peserta->PASSWORD_PESERTA = bcrypt($data['PASSWORD_PESERTA']);
+
+        $peserta->save();
+
+        return response(['message' => 'Change password success'], 200);
     }
 }

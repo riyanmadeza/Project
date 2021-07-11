@@ -21,7 +21,7 @@ class CreateLicensesTable extends Migration
             $table->dateTime('ENTRY_DATE')->nullable(true)->default(null);
             $table->string('UPDATE_USER', 50)->nullable(true)->default(null);
             $table->dateTime('UPDATE_DATE')->nullable(true)->default(null);
-            $table->primary(['CABANG_CODE', 'DATEFROM', 'DATETO']);
+            $table->primary('CABANG_CODE');
         });
     }
 

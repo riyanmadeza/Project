@@ -28,12 +28,16 @@ Route::post('register/admin', [AuthController::class, 'register']);
 
 Route::post('login/peserta', [AuthPesertaController::class, 'login']);
 Route::post('register/peserta', [AuthPesertaController::class, 'register']);
+Route::post('changepassword/peserta', [AuthPesertaController::class, 'changepassword']);
+
+Route::get('cabang', [CabangController::class, 'index']);
+Route::get('url', [UrlController::class, 'index']);
+Route::get('config', [AppConfigurationController::class, 'index']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('logout/admin', [AuthController::class, 'logout']);
     Route::post('logout/peserta', [AuthPesertaController::class, 'logout']);
     //cabang
-    Route::get('cabang', [CabangController::class, 'index']);
     Route::post('cabang/search', [CabangController::class, 'search']);
     Route::post('cabang', [CabangController::class, 'store']);
     Route::delete('cabang', [CabangController::class, 'delete']);
@@ -41,10 +45,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('license', [LicenseController::class, 'index']);
     Route::post('license/search', [LicenseController::class, 'search']);
     //Url
-    Route::get('url', [UrlController::class, 'index']);
     Route::post('url/search', [UrlController::class, 'search']);
     //App Configuration
-    Route::get('config', [AppConfigurationController::class, 'index']);
     Route::post('config/search', [AppConfigurationController::class, 'search']);
     //Jenis Perlombaan
     Route::get('jenis', [JenisPerlombaanController::class, 'index']);

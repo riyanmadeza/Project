@@ -9,7 +9,8 @@ class PesertaKompetisi extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $primaryKey = ['ROW_ID_KOMPETISI', 'ID_PESERTA'];
+    public $incrementing = false;
+    protected $primaryKey = 'ID_PESERTA';
     protected $table = 'tb_peserta_kompetisi';
     protected $fillable = [
         "ROW_ID_KOMPETISI", "ID_PESERTA", "ENTRY_USER", "ENTRY_DATE", "UPDATE_USER", "UPDATE_DATE",

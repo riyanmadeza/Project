@@ -13,6 +13,7 @@ class Peserta extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     public $timestamps = false;
+    //public $incrementing = false;
     protected $primaryKey = 'ID_PESERTA';
     protected $table = 'tb_peserta';
     protected $fillable = [

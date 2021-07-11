@@ -9,6 +9,7 @@ class ParameterKompetisi extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $incrementing = false;
     protected $primaryKey = ['ROW_ID_KOMPETISI', 'PARAMETER_ID'];
     protected $table = 'tb_parameter_kompetisi';
     protected $fillable = [
