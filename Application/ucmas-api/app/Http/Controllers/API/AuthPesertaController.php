@@ -16,7 +16,7 @@ class AuthPesertaController extends Controller
     public function register(Request $request)
     {
         $data = $request->validate([
-            'ID_PESERTA' => 'required|string|max:10',
+            'ID_PESERTA' => 'required|string|max:20',
             'NAMA_PESERTA' => 'required|string|max:50',
             'JENIS_KELAMIN' => 'required|string|max:1',
             'TEMPAT_LAHIR' => 'required|string|max:50',
@@ -82,7 +82,7 @@ class AuthPesertaController extends Controller
 
         if($license->isEmpty())
         {
-            return response(['message' => 'License not valid'], 400);
+            return response(['message' => 'Lisensi tidak valid'], 400);
         }
 
         $pesertaKompetisi = PesertaKompetisi::where('ID_PESERTA', $data['ID_PESERTA'])->get();
@@ -118,7 +118,7 @@ class AuthPesertaController extends Controller
 
         if(!$peserta || !Hash::check($data['PASSWORD_PESERTA'], $peserta->PASSWORD_PESERTA))
         {
-            return response(['message' => 'Invalid Credentials'], 400);
+            return response(['message' => 'Id peserta/Password tidak valid'], 400);
         }
         else
         {
@@ -127,6 +127,7 @@ class AuthPesertaController extends Controller
             $peserta->PASSWORD_PESERTA = $data['PASSWORD_PESERTA'];
 
             $response = [
+                'message' => 'Berhasil login',
                 'peserta' => $peserta,
                 'kompetisi' => $kompetisi,
                 'parameterkompetisi' => $parameterkomp,

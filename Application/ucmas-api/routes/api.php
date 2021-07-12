@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AuthPesertaController;
 use App\Http\Controllers\AppConfigurationController;
 use App\Http\Controllers\CabangController;
+use App\Http\Controllers\JawabanKompetisiController;
 use App\Http\Controllers\JenisPerlombaanController;
 use App\Http\Controllers\KategoriPerlombaanController;
 use App\Http\Controllers\LicenseController;
@@ -57,6 +58,9 @@ Route::middleware(['auth:sanctum'])->group(function(){
     //Parameter Perlombaan
     Route::get('parameter', [ParameterPerlombaanController::class, 'index']);
     Route::post('parameter/search', [ParameterPerlombaanController::class, 'search']);
+    //JawabanKompetisi
+    Route::post('kompetisi/jawaban', [JawabanKompetisiController::class, 'jawaban']);
+    Route::post('kompetisi/input', [JawabanKompetisiController::class, 'input']);
 });
 /* Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
