@@ -48,13 +48,23 @@ class JawabanKompetisiController extends Controller
 
     public function jawaban(Request $request)
     {
-        $data = $request->validate([
+        /* $data = $request->validate([
             'ROW_ID_KOMPETISI' => 'required|string',
             'ID_PESERTA' => 'required|string|max:20',
-        ]);
+            'SOAL_NO' => 'required'
+        ]); */
 
-        $jawaban = JawabanKompetisi::where('ROW_ID_KOMPETISI', $data['ROW_ID_KOMPETISI'])
-                ->where('ID_PESERTA')->get();
+        if($request['SOAL_NO'] == null)
+        {
+            $jawaban = JawabanKompetisi::where('ROW_ID_KOMPETISI', $request['ROW_ID_KOMPETISI'])
+                ->where('ID_PESERTA', $request['ID_PESERTA'])->get();
+        }else
+        {
+            $jawaban = JawabanKompetisi::where('ROW_ID_KOMPETISI', $request['ROW_ID_KOMPETISI'])
+                ->where('ID_PESERTA', $request['ID_PESERTA'])
+                ->where('SOAL_NO', $request['SOAL_NO'])
+                ->get();
+        }
 
         if($jawaban->isEmpty())
         {
