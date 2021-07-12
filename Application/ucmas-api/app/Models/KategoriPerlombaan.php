@@ -9,6 +9,7 @@ class KategoriPerlombaan extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $incrementing = false;
     protected $primaryKey = 'ROW_ID';
     protected $table = 'tb_kategori_perlombaan';
     protected $fillable = [

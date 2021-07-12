@@ -9,6 +9,7 @@ class AppConfiguration extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $incrementing = false;
     protected $primaryKey = 'CONFIG_CODE';
     protected $table = 'tb_application_configuration';
     protected $fillable = [

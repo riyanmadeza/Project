@@ -9,6 +9,7 @@ class Lokasi extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $incrementing = false;
     protected $primaryKey = 'LOKASI_NAME';
     protected $table = 'tb_lokasi';
     protected $fillable = [

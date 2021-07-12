@@ -9,6 +9,7 @@ class ParameterPerlombaan extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $incrementing = false;
     protected $primaryKey = ['ROW_ID_HDR', 'PARAMETER_ID'];
     protected $table = 'tb_parameter_perlombaan';
     protected $fillable = [

@@ -9,6 +9,7 @@ class Url extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $incrementing = false;
     protected $primaryKey = 'URL_CODE';
     protected $table = 'tb_url';
     protected $fillable = [

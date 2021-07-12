@@ -9,6 +9,7 @@ class Cabang extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    public $incrementing = false;
     protected $primaryKey = 'CABANG_CODE';
     protected $table = 'tb_cabang';
     protected $fillable = [
