@@ -39,8 +39,12 @@ class JawabanKompetisiController extends Controller
             'UPDATE_DATE' => now(),
         ]);
 
+        $output[] = [
+            'message' => 'Berhasil input jawaban',
+        ];
+
         $response = [
-            'message' => 'Berhasil input data'
+            'data' => $output
         ];
 
         return response()->json($response, 201);
@@ -68,11 +72,17 @@ class JawabanKompetisiController extends Controller
 
         if($jawaban->isEmpty())
         {
-            return response(['message' => 'Tidak ada data'], 400);
+            $output[] = [
+                'message' => 'Jawaban peserta belum ada',
+            ];
+            return response(['data' => $output], 400);
         }
 
+        $output[] = [
+            'message' => 'Jawaban peserta sudah ada',
+        ];
         $response = [
-            'message' => 'data ditemukan',
+            'data' => $output,
             'jawaban' => $jawaban
         ];
 

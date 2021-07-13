@@ -82,14 +82,22 @@ class AuthPesertaController extends Controller
 
         if($license->isEmpty())
         {
-            return response(['message' => 'Lisensi tidak valid'], 400);
+            $output[] = [
+                'message' => 'Lisensi cabang tidak valid',
+                'token' => '',
+            ];
+            return response(['data' => $output], 400);
         }
 
         $pesertaKompetisi = PesertaKompetisi::where('ID_PESERTA', $data['ID_PESERTA'])->get();
 
         if($pesertaKompetisi->isEmpty())
         {
-            return response(['message' => 'Peserta tidak terdaftar kompetisi'], 400);
+            $output[] = [
+                'message' => 'Peserta tidak terdaftar kompetisi',
+                'token' => '',
+            ];
+            return response(['data' => $output], 400);
         }
 
         $row_id_peserta = [];
@@ -109,7 +117,11 @@ class AuthPesertaController extends Controller
 
         if($kompetisi->isEmpty())
         {
-            return response(['message' => 'Tidak ada jadwal kompetisi peserta'], 400);
+            $output[] = [
+                'message' => 'Tidak ada jadwal kompetisi peserta',
+                'token' => '',
+            ];
+            return response(['data' => $output], 400);
         }
 
         $parameterkomp = ParameterKompetisi::whereIn('ROW_ID_KOMPETISI', $row_id_peserta)->get();
@@ -121,7 +133,11 @@ class AuthPesertaController extends Controller
 
         if(!$peserta || !Hash::check($data['PASSWORD_PESERTA'], $peserta->PASSWORD_PESERTA))
         {
-            return response(['message' => 'Id peserta/Password tidak valid'], 400);
+            $output[] = [
+                'message' => 'Id peserta/Password tidak valid',
+                'token' => '',
+            ];
+            return response(['data' => $output], 400);
         }
         else
         {
