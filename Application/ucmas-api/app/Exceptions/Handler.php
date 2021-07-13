@@ -2,11 +2,24 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\Response;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof NotFoundHttpException) {
+            $output[] = [
+                'message' => 'Url tidak valid'
+            ];
+            return response(['Data'=> $output], Response::HTTP_NOT_FOUND);
+        }
+
+        return parent::render($request, $exception);
+    }
     /**
      * A list of the exception types that are not reported.
      *

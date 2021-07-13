@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UrlController;
 use App\Http\Controllers\CabangController;
@@ -24,13 +22,6 @@ use App\Http\Controllers\ParameterPerlombaanController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::fallback(function () {
-    $output[] = [
-        'message' => 'Url tidak valid'
-    ];
-    return (new Response(['Data'=> $output],404));
-});
 
 Route::post('login/admin', [AuthController::class, 'login']);
 Route::post('register/admin', [AuthController::class, 'register']);
