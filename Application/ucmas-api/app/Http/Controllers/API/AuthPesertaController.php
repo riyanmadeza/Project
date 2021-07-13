@@ -126,31 +126,35 @@ class AuthPesertaController extends Controller
         else
         {
             $token = $peserta->createToken('UcmasTokenLogin')->plainTextToken;
-            //$peserta->ID_PESERTA = $data['ID_PESERTA'];
-            //$peserta->PASSWORD_PESERTA = $data['PASSWORD_PESERTA'];
-            $DataPeserta['ID_PESERTA'] = $data['ID_PESERTA'];
-            $DataPeserta['NAMA_PESERTA'] = $peserta->NAMA_PESERTA;
-            $DataPeserta['JENIS_KELAMIN'] = $peserta->JENIS_KELAMIN;
-            $DataPeserta['TEMPAT_LAHIR'] = $peserta->TEMPAT_LAHIR;
-            $DataPeserta['TANGGAL_LAHIR'] = $peserta->TANGGAL_LAHIR;
-            $DataPeserta['ALAMAT_PESERTA'] = $peserta->ALAMAT_PESERTA;
-            $DataPeserta['SEKOLAH_PESERTA'] = $peserta->SEKOLAH_PESERTA;
-            $DataPeserta['NO_TELP_PESERTA'] = $peserta->NO_TELP_PESERTA;
-            $DataPeserta['EMAIL_PESERTA'] = $peserta->EMAIL_PESERTA;
-            $DataPeserta['IS_USMAS'] = $peserta->IS_USMAS;
-            $DataPeserta['PASSWORD_PESERTA'] = $data['PASSWORD_PESERTA'];
-            $DataPeserta['CABANG_CODE'] = $peserta->CABANG_CODE;
-            $DataPeserta['ENTRY_USER'] = $peserta->ENTRY_USER;
-            $DataPeserta['ENTRY_DATE'] = $peserta->ENTRY_DATE;
-            $DataPeserta['UPDATE_USER'] = $peserta->UPDATE_USER;
-            $DataPeserta['UPDATE_DATE'] = $peserta->UPDATE_DATE;
 
-            $response = [
+            $DataPeserta[] = [
+                'ID_PESERTA' => $data['ID_PESERTA'],
+                'NAMA_PESERTA' => $peserta->NAMA_PESERTA,
+                'JENIS_KELAMIN' => $peserta->JENIS_KELAMIN,
+                'TEMPAT_LAHIR' => $peserta->TEMPAT_LAHIR,
+                'TANGGAL_LAHIR' => $peserta->TANGGAL_LAHIR,
+                'ALAMAT_PESERTA' => $peserta->ALAMAT_PESERTA,
+                'SEKOLAH_PESERTA' => $peserta->SEKOLAH_PESERTA,
+                'NO_TELP_PESERTA' => $peserta->NO_TELP_PESERTA,
+                'EMAIL_PESERTA' => $peserta->EMAIL_PESERTA,
+                'IS_USMAS' => $peserta->IS_USMAS,
+                'PASSWORD_PESERTA' => $data['PASSWORD_PESERTA'],
+                'CABANG_CODE' => $peserta->CABANG_CODE,
+                'ENTRY_USER' => $peserta->ENTRY_USER,
+                'ENTRY_DATE' => $peserta->ENTRY_DATE,
+                'UPDATE_USER' => $peserta->UPDATE_USER,
+                'UPDATE_DATE' => $peserta->UPDATE_DATE,
+            ];
+
+            $output[] = [
                 'message' => 'Berhasil login',
+                'token' => $token,
+            ];
+            $response = [
+                'data' => $output,
                 'peserta' => $DataPeserta,
                 'kompetisi' => $kompetisi,
-                'parameterkompetisi' => $parameterkomp,
-                'token' => $token
+                'parameterkompetisi' => $parameterkomp
             ];
 
             return response()->json($response, 200);
