@@ -100,16 +100,16 @@ class AuthPesertaController extends Controller
             return response(['data' => $output], 400);
         }
 
-        $row_id_peserta = [];
+        $rowid_komp = [];
         foreach ($pesertaKompetisi as $rowid){
-            $row_id_peserta[] = $rowid->ROW_ID_KOMPETISI;
+            $rowid_komp[] = $rowid->ROW_ID_KOMPETISI;
         }
 
         $jam = (int)date('H') + 7;
         $time = (string)$jam . date('is');
 
         $kompetisi = Kompetisi::where('CABANG_CODE', $data['CABANG_CODE'])
-                ->whereIn('ROW_ID', $row_id_peserta)
+                ->whereIn('ROW_ID', $rowid_komp)
                 ->where('TANGGAL_KOMPETISI', date('Y-m-d'))
                 ->where('JAM_MULAI','<=', $time)
                 ->where('JAM_SAMPAI','>=', $time)
@@ -124,7 +124,12 @@ class AuthPesertaController extends Controller
             return response(['data' => $output], 400);
         }
 
-        $parameterkomp = ParameterKompetisi::whereIn('ROW_ID_KOMPETISI', $row_id_peserta)->get();
+        $rowid_komp1 = [];
+        foreach ($kompetisi as $rowid){
+            $rowid_komp1[] = $rowid->ROW_ID;
+        }
+
+        $parameterkomp = ParameterKompetisi::whereIn('ROW_ID_KOMPETISI', $rowid_komp1)->get();
         //date('Y-m-d') date('His')
         /* return response()->json(['message' => 'OK',
                                  'data' => $kompetisi], 200); */
