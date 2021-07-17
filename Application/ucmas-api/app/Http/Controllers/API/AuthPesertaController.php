@@ -171,6 +171,8 @@ class AuthPesertaController extends Controller
                 'UPDATE_DATE' => $peserta->UPDATE_DATE,
             ];
 
+            $peserta->tokens()->where('created_at','<', now()->addDays(-1))->delete();
+
             $output[] = [
                 'message' => 'Berhasil login',
                 'token' => $token,
