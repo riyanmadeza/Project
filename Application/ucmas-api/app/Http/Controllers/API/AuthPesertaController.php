@@ -6,6 +6,7 @@ use App\Models\License;
 use App\Models\Peserta;
 use App\Models\Kompetisi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\PesertaKompetisi;
 use App\Models\ParameterKompetisi;
 use App\Http\Controllers\Controller;
@@ -104,9 +105,12 @@ class AuthPesertaController extends Controller
         foreach ($pesertaKompetisi as $rowid){
             $rowid_komp[] = $rowid->ROW_ID_KOMPETISI;
         }
+        //Str::substr('The Laravel Framework', 4, 7);
+        //Str::length('Laravel');  . date('is')
 
         $jam = (int)date('H') + 7;
-        $time = (string)$jam . date('is');
+        $jamstr = '0' . (string)$jam;
+        $time = Str::substr($jamstr, Str::length($jamstr) - 2, 2) . date('is');
 
         $kompetisi = Kompetisi::where('CABANG_CODE', $data['CABANG_CODE'])
                 ->whereIn('ROW_ID', $rowid_komp)
