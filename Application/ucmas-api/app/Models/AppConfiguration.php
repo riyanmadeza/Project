@@ -10,9 +10,9 @@ class AppConfiguration extends Model
     use HasFactory;
     public $timestamps = false;
     public $incrementing = false;
-    protected $primaryKey = 'CONFIG_CODE';
+    protected $primaryKey = ['CONFIG_CODE', 'CABANG_CODE'];
     protected $table = 'tb_application_configuration';
     protected $fillable = [
-        'CONFIG_CODE', 'CONFIG_NAME', 'CONFIG_PARAM', 'ENTRY_USER', 'ENTRY_DATE', 'UPDATE_USER', 'UPDATE_DATE',
+        'CABANG_CODE', 'CONFIG_CODE', 'CONFIG_NAME', 'CONFIG_PARAM', 'ENTRY_USER', 'ENTRY_DATE', 'UPDATE_USER', 'UPDATE_DATE',
     ];
 }
