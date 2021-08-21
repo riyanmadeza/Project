@@ -16,7 +16,7 @@ class AppConfigurationController extends Controller
     public function search(Request $request)
     {
         $appconfig = AppConfiguration::where('CONFIG_CODE', $request->CONFIG_CODE)
-                                    ->where('CABANG_CODE', $request->CONFIG_CODE)
+                                    ->where('CABANG_CODE', $request->CABANG_CODE)
                                     ->get();
 
         return response()->json(['config' => $appconfig], 200);
