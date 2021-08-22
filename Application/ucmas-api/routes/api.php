@@ -33,6 +33,7 @@ Route::post('changepassword/peserta', [AuthPesertaController::class, 'changepass
 Route::get('cabang', [CabangController::class, 'index']);
 Route::get('url', [UrlController::class, 'index']);
 Route::get('config', [AppConfigurationController::class, 'index']);
+Route::post('config/search', [AppConfigurationController::class, 'search']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('logout/admin', [AuthController::class, 'logout']);
