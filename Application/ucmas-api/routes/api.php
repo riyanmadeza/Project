@@ -12,6 +12,7 @@ use App\Http\Controllers\JawabanKompetisiController;
 use App\Http\Controllers\KategoriPerlombaanController;
 use App\Http\Controllers\ParameterPerlombaanController;
 use App\Http\Controllers\UsersAdmController;
+use App\Http\Controllers\KompetisiTrialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::get('config', [AppConfigurationController::class, 'index']);
 Route::post('config/search', [AppConfigurationController::class, 'search']);
 
 Route::post('admlogin/search', [UsersAdmController::class, 'search']);
+Route::get('kompetisitrial', [KompetisiTrialController::class, 'index']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('logout/admin', [AuthController::class, 'logout']);
