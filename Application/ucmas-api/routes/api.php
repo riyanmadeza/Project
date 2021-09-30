@@ -38,7 +38,7 @@ Route::get('config', [AppConfigurationController::class, 'index']);
 Route::post('config/search', [AppConfigurationController::class, 'search']);
 
 Route::post('admlogin/search', [UsersAdmController::class, 'search']);
-Route::get('kompetisitrial', [KompetisiTrialController::class, 'index']);
+Route::post('kompetisitrial/search', [KompetisiTrialController::class, 'search']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('logout/admin', [AuthController::class, 'logout']);

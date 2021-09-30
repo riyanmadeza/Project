@@ -13,7 +13,7 @@ class KompetisiTrial extends Model
     protected $primaryKey = 'ROW_ID';
     protected $table = 'tb_kompetisi_trial';
     protected $fillable = [
-        "ROW_ID", "CABANG_CODE", "KOMPETISI_NAME", "TANGGAL_KOMPETISI", "JAM_MULAI",
+        "ROW_ID", "CABANG_CODE", "KOMPETISI_NAME", "TANGGAL_KOMPETISI", "TANGGAL_SELESAI_TRIAL", "JAM_MULAI",
         "JAM_SAMPAI", "JENIS_CODE", "JENIS_NAME", "TIPE", "ROW_ID_KATEGORI", "KATEGORI_CODE",
         "KATEGORI_NAME", "LAMA_PERLOMBAAN", "KECEPATAN",
         "ENTRY_USER", "ENTRY_DATE", "UPDATE_USER", "UPDATE_DATE",

@@ -9,13 +9,19 @@ use Illuminate\Support\Str;
 
 class KompetisiTrialController extends Controller
 {
-    public function index()
+    public function search(Request $request)
     {
+        $data = $request->validate([
+            'CABANG_CODE' => 'required|string'
+        ]);
+        
         $jam = (int)date('H') + 7;
         $jamstr = '0' . (string)$jam;
         $time = Str::substr($jamstr, Str::length($jamstr) - 2, 2) . date('is');
 
-        $kompetisi = KompetisiTrial::where('TANGGAL_KOMPETISI', date('Y-m-d'))
+        $kompetisi = KompetisiTrial::where('CABANG_CODE', $data['CABANG_CODE'])
+                ->where('TANGGAL_KOMPETISI', '<=', date('Y-m-d'))
+                ->where('TANGGAL_SELESAI_TRIAL', '>=', date('Y-m-d'))
                 ->where('JAM_MULAI','<=', $time)
                 ->where('JAM_SAMPAI','>=', $time)
                 ->get();
@@ -24,7 +30,6 @@ class KompetisiTrialController extends Controller
         {
             $output[] = [
                 'message' => 'Tidak ada jadwal kompetisi peserta',
-                'token' => '',
             ];
             return response(['data' => $output], 400);
         }
