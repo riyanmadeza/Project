@@ -15,6 +15,8 @@ class KompetisiTrialController extends Controller
     public function search(Request $request)
     {
         $data = $request->validate([
+            'ID_PESERTA' => '',
+            'PASSWORD_PESERTA' => '',
             'CABANG_CODE' => 'required|string'
         ]);
 
