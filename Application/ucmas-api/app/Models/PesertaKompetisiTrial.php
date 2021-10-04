@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class PesertaKompetisiTrial extends Model
+{
+    use HasFactory;
+    public $timestamps = false;
+    public $incrementing = false;
+    protected $primaryKey = 'ID_PESERTA';
+    protected $table = 'tb_peserta_kompetisi_trial';
+    protected $fillable = [
+        "ROW_ID_KOMPETISI", "ID_PESERTA", "ENTRY_USER", "ENTRY_DATE", "UPDATE_USER", "UPDATE_DATE",
+    ];
+}
