@@ -10,7 +10,7 @@ class JawabanKompetisiController extends Controller
     public function input(Request $request)
     {
         $data = $request->validate([
-            'ROW_ID_KOMPETISI' => 'required|string|max:20',
+            'ROW_ID_KOMPETISI' => 'required|string|max:36',
             'ID_PESERTA' => 'required|string|max:20',
             'SOAL_NO' => 'required',
             'PERTANYAAN' => 'required',
