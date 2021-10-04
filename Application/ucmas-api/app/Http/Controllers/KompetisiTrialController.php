@@ -9,6 +9,7 @@ use App\Models\PesertaKompetisiTrial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class KompetisiTrialController extends Controller
 {
@@ -19,28 +20,36 @@ class KompetisiTrialController extends Controller
             'PASSWORD_PESERTA' => '',
             'CABANG_CODE' => 'required|string'
         ]);
-
+        
         $rowid_komp = [];
         $kompetisi = [];
+        $kompetisiTrial = [];
         $DataPeserta = [];
+        
         $pesertaKompetisi = PesertaKompetisiTrial::where('ID_PESERTA', $data['ID_PESERTA'])->get();
         $peserta = Peserta::where('ID_PESERTA', $data['ID_PESERTA'])->first();
-
+            
         $jam = (int)date('H') + 7;
         $jamstr = '0' . (string)$jam;
         $time = Str::substr($jamstr, Str::length($jamstr) - 2, 2) . date('is');
-
+        
+        $kompetisiTrial = KompetisiTrial::where('tb_kompetisi_trial.CABANG_CODE', $data['CABANG_CODE'])
+                ->where('tb_kompetisi_trial.TANGGAL_KOMPETISI', '<=', date('Y-m-d'))
+                ->where('tb_kompetisi_trial.TANGGAL_SELESAI_TRIAL', '>=', date('Y-m-d'))
+                ->where('tb_kompetisi_trial.JAM_MULAI','<=', $time)
+                ->where('tb_kompetisi_trial.JAM_SAMPAI','>=', $time)
+                ->leftJoin('tb_peserta_kompetisi_trial', 'tb_kompetisi_trial.ROW_ID', '=', 'tb_peserta_kompetisi_trial.ROW_ID_KOMPETISI')
+                ->where('tb_peserta_kompetisi_trial.ID_PESERTA', '=', NULL)
+                ->select('tb_kompetisi_trial.*')
+                ->get();
+        
         if($pesertaKompetisi->isEmpty())
         {
-            $kompetisi = KompetisiTrial::where('CABANG_CODE', $data['CABANG_CODE'])
-                ->where('TANGGAL_KOMPETISI', '<=', date('Y-m-d'))
-                ->where('TANGGAL_SELESAI_TRIAL', '>=', date('Y-m-d'))
-                ->where('JAM_MULAI','<=', $time)
-                ->where('JAM_SAMPAI','>=', $time)
-                ->get();
+            $kompetisi = $kompetisiTrial;
+            
 
             $DataPeserta[] = [
-                'ID_PESERTA' => null,
+                'ID_PESERTA' => 'TRL000000001',
                 'NAMA_PESERTA' => 'Peserta Trial',
                 'JENIS_KELAMIN' => null,
                 'TEMPAT_LAHIR' => null,
@@ -66,15 +75,19 @@ class KompetisiTrialController extends Controller
                 ];
                 return response(['data' => $output], 400);
             }
-
-            $kompetisi = KompetisiTrial::where('CABANG_CODE', $data['CABANG_CODE'])
-                ->whereIn('ROW_ID', $rowid_komp)
-                ->where('TANGGAL_KOMPETISI', '<=', date('Y-m-d'))
-                ->where('TANGGAL_SELESAI_TRIAL', '>=', date('Y-m-d'))
-                ->where('JAM_MULAI','<=', $time)
-                ->where('JAM_SAMPAI','>=', $time)
+            
+            $kompetisi1 = KompetisiTrial::where('tb_kompetisi_trial.CABANG_CODE', $data['CABANG_CODE'])
+                ->whereIn('tb_kompetisi_trial.ROW_ID', $rowid_komp)
+                ->where('tb_kompetisi_trial.TANGGAL_KOMPETISI', '<=', date('Y-m-d'))
+                ->where('tb_kompetisi_trial.TANGGAL_SELESAI_TRIAL', '>=', date('Y-m-d'))
+                ->where('tb_kompetisi_trial.JAM_MULAI','<=', $time)
+                ->where('tb_kompetisi_trial.JAM_SAMPAI','>=', $time)
+                ->leftJoin('tb_peserta_kompetisi_trial', 'tb_kompetisi_trial.ROW_ID', '=', 'tb_peserta_kompetisi_trial.ROW_ID_KOMPETISI')
+                ->select("tb_kompetisi_trial.*")
                 ->get();
-
+            
+            $kompetisi = $kompetisiTrial->merge($kompetisi1);
+            
             $DataPeserta[] = [
                 'ID_PESERTA' => $data['ID_PESERTA'],
                 'NAMA_PESERTA' => $peserta->NAMA_PESERTA,
