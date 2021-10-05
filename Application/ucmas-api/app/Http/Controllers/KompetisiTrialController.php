@@ -40,7 +40,12 @@ class KompetisiTrialController extends Controller
                 ->where('tb_kompetisi_trial.JAM_SAMPAI','>=', $time)
                 ->leftJoin('tb_peserta_kompetisi_trial', 'tb_kompetisi_trial.ROW_ID', '=', 'tb_peserta_kompetisi_trial.ROW_ID_KOMPETISI')
                 ->where('tb_peserta_kompetisi_trial.ID_PESERTA', '=', NULL)
-                ->select('tb_kompetisi_trial.*')
+                ->select("tb_kompetisi_trial.ROW_ID","tb_kompetisi_trial.CABANG_CODE","tb_kompetisi_trial.KOMPETISI_NAME", 
+                    "tb_kompetisi_trial.TANGGAL_KOMPETISI","tb_kompetisi_trial.JAM_MULAI","tb_kompetisi_trial.JAM_SAMPAI", 
+                    "tb_kompetisi_trial.JENIS_CODE","tb_kompetisi_trial.JENIS_NAME","tb_kompetisi_trial.TIPE","tb_kompetisi_trial.ROW_ID_KATEGORI", 
+                    "tb_kompetisi_trial.KATEGORI_CODE","tb_kompetisi_trial.KATEGORI_NAME","tb_kompetisi_trial.LAMA_PERLOMBAAN", 
+                    "tb_kompetisi_trial.KECEPATAN","tb_kompetisi_trial.ENTRY_USER","tb_kompetisi_trial.ENTRY_DATE", 
+                    "tb_kompetisi_trial.UPDATE_USER","tb_kompetisi_trial.UPDATE_DATE","tb_kompetisi_trial.TANGGAL_SELESAI_TRIAL")
                 ->get();
         
         if($pesertaKompetisi->isEmpty())
@@ -89,7 +94,12 @@ class KompetisiTrialController extends Controller
                 ->where('tb_kompetisi_trial.JAM_MULAI','<=', $time)
                 ->where('tb_kompetisi_trial.JAM_SAMPAI','>=', $time)
                 ->leftJoin('tb_peserta_kompetisi_trial', 'tb_kompetisi_trial.ROW_ID', '=', 'tb_peserta_kompetisi_trial.ROW_ID_KOMPETISI')
-                ->select("tb_kompetisi_trial.*")
+                ->select("tb_kompetisi_trial.ROW_ID","tb_kompetisi_trial.CABANG_CODE","tb_kompetisi_trial.KOMPETISI_NAME", 
+                    "tb_kompetisi_trial.TANGGAL_KOMPETISI","tb_kompetisi_trial.JAM_MULAI","tb_kompetisi_trial.JAM_SAMPAI", 
+                    "tb_kompetisi_trial.JENIS_CODE","tb_kompetisi_trial.JENIS_NAME","tb_kompetisi_trial.TIPE","tb_kompetisi_trial.ROW_ID_KATEGORI", 
+                    "tb_kompetisi_trial.KATEGORI_CODE","tb_kompetisi_trial.KATEGORI_NAME","tb_kompetisi_trial.LAMA_PERLOMBAAN", 
+                    "tb_kompetisi_trial.KECEPATAN","tb_kompetisi_trial.ENTRY_USER","tb_kompetisi_trial.ENTRY_DATE", 
+                    "tb_kompetisi_trial.UPDATE_USER","tb_kompetisi_trial.UPDATE_DATE","tb_kompetisi_trial.TANGGAL_SELESAI_TRIAL")
                 ->get();
             
             $kompetisi = $kompetisiTrial->merge($kompetisi1);
