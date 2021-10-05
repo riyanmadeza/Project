@@ -59,7 +59,12 @@ class KompetisiTrialController extends Controller
                 'NO_TELP_PESERTA' => '-',
                 'EMAIL_PESERTA' => '-',
                 'IS_USMAS' => 'N',
+                'PASSWORD_PESERTA' => $data['PASSWORD_PESERTA'],
                 'CABANG_CODE' => $data['CABANG_CODE'],
+                'ENTRY_USER' => '-',
+                'ENTRY_DATE' => '-',
+                'UPDATE_USER' => '-',
+                'UPDATE_DATE' => '-',
             ];
 
         }else{
@@ -72,6 +77,7 @@ class KompetisiTrialController extends Controller
             {
                 $output[] = [
                     'message' => 'Id peserta/Password tidak valid',
+                    'token' => '',
                 ];
                 return response(['data' => $output], 400);
             }
@@ -99,7 +105,12 @@ class KompetisiTrialController extends Controller
                 'NO_TELP_PESERTA' => $peserta->NO_TELP_PESERTA,
                 'EMAIL_PESERTA' => $peserta->EMAIL_PESERTA,
                 'IS_USMAS' => $peserta->IS_USMAS,
+                'PASSWORD_PESERTA' => $data['PASSWORD_PESERTA'],
                 'CABANG_CODE' => $peserta->CABANG_CODE,
+                'ENTRY_USER' => $peserta->ENTRY_USER,
+                'ENTRY_DATE' => $peserta->ENTRY_DATE,
+                'UPDATE_USER' => $peserta->UPDATE_USER,
+                'UPDATE_DATE' => $peserta->UPDATE_DATE,
             ];
         }
 
@@ -107,6 +118,7 @@ class KompetisiTrialController extends Controller
         {
             $output[] = [
                 'message' => 'Tidak ada jadwal kompetisi peserta',
+                'token' => '',
             ];
             return response(['data' => $output], 400);
         }
@@ -118,7 +130,13 @@ class KompetisiTrialController extends Controller
 
         $parameterkomp = ParameterKompetisiTrial::whereIn('ROW_ID_KOMPETISI', $rowid_komp1)->get();
         
+        $output[] = [
+            'message' => 'Berhasil login',
+            'token' => '',
+        ];
+
         $response = [
+            'data' => $output,
             'peserta' => $DataPeserta,
             'kompetisi' => $kompetisi,
             'parameterkompetisi' => $parameterkomp
