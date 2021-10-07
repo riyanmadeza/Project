@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\KompetisiTrial;
-use App\Models\ParameterKompetisiTrial;
 use App\Models\Peserta;
+use App\Models\ParameterKompetisiTrial;
+use App\Models\License;
 use App\Models\PesertaKompetisiTrial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -25,6 +26,21 @@ class KompetisiTrialController extends Controller
         $kompetisi = [];
         $kompetisiTrial = [];
         $DataPeserta = [];
+
+        $today = now();
+        $license = License::where('CABANG_CODE', $data['CABANG_CODE'])
+                ->whereDate('DATEFROM','<=', $today)
+                ->whereDate('DATETO','>=', $today)
+                ->get();
+
+        if($license->isEmpty())
+        {
+            $output[] = [
+                'message' => 'Lisensi cabang tidak valid',
+                'token' => '',
+            ];
+            return response(['data' => $output], 400);
+        }
         
         $pesertaKompetisi = PesertaKompetisiTrial::where('ID_PESERTA', $data['ID_PESERTA'])->get();
         $peserta = Peserta::where('ID_PESERTA', $data['ID_PESERTA'])->first();
